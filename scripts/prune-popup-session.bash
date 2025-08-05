@@ -1,7 +1,8 @@
 #! /usr/bin/env bash
 # kill unused popup session
 
-DEFAULT_SESSION_NAME_FORMAT="$1"
+CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source "$CURRENT_DIR/helper.bash"
 
 escape_tmux_formats() {
   local text=$(cat)
@@ -12,10 +13,8 @@ escape_tmux_formats() {
   echo $text
 }
 
-FORMAT=$(tmux display-message -pF \
-  "#{?@toggle-scratch--name-format,#{@toggle-scratch-session-name-format},#{l:${DEFAULT_SESSION_NAME_FORMAT}}}")
+FORMAT=$(get_session_name_format)
 PATTERN=$(echo "$FORMAT" | sed -e 's/[][)(\\.*^$+?|]/\\&/g' | escape_tmux_formats)
-
 diff --old-line-format='' --unchanged-line-format='' --new-line-format='%L' \
   <(tmux list-panes -aF "$FORMAT" | uniq) \
   <(tmux list-sessions -F '#S' -f "#{m/r:${PATTERN},#S}") |
