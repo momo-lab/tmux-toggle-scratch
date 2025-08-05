@@ -1,5 +1,11 @@
 #! /usr/bin/env bash
 
+# Check tmux version (3.2+ required for display-popup)
+tmux -V | grep -q ' 3\.[2-9]\| [4-9]\.' || {
+  tmux display-message "Error: tmux 3.2+ required for display-popup"
+  exit 1
+}
+
 CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 KEYS=$(tmux display-message -pF "#{?@toggle-scratch-keys,#{@toggle-scratch-keys},C-s}")

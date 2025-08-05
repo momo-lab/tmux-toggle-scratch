@@ -11,6 +11,10 @@ and temporary work.
 - Customizable key bindings and popup options
 - Configurable session scope (per-window, per-session, per-pane, or global)
 
+## Requirements
+
+- tmux 3.2 or higher (required for `display-popup` command)
+
 ## Installation
 
 ### Using [TPM](https://github.com/tmux-plugins/tpm) (Tmux Plugin Manager)
