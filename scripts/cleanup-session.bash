@@ -1,5 +1,4 @@
 #! /usr/bin/env bash
-# kill unused popup session
 
 CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source "$CURRENT_DIR/helper.bash"

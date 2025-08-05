@@ -11,4 +11,4 @@ for key in $KEYS; do
     "
 done
 
-tmux set-hook -g 'pane-exited' "run-shell $CURRENT_DIR/scripts/prune-popup-session.bash"
+tmux set-hook -g 'pane-exited' "run-shell $CURRENT_DIR/scripts/cleanup-session.bash"
