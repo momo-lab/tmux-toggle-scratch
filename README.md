@@ -1,13 +1,12 @@
 # tmux-toggle-scratch
 
-A tmux plugin that provides a convenient way to toggle a scratch popup window for quick note-taking
-and temporary work.
+A tmux plugin to toggle scratch popup sessions for quick note-taking and temporary work.
 
 ## Features
 
-- Toggle scratch popup window with a simple key binding
-- Persistent session that survives popup close/open
-- Automatic session cleanup when all matching panes are closed
+- Toggle scratch popup sessions with simple key bindings
+- Persistent sessions that survive popup close/open cycles
+- Automatic session cleanup when matching panes are closed
 - Customizable key bindings and popup options
 - Configurable session scope (per-window, per-session, per-pane, or global)
 
@@ -51,11 +50,13 @@ Then press `prefix + I` to install the plugin.
 Default key binding: `prefix + Ctrl-s`
 
 Press the key binding to:
-
-- Open scratch popup if not currently in one
-- Close scratch popup if currently inside one
-
 The scratch session persists between toggles, so your work is never lost.
+
+### Common Use Cases
+
+- **Quick notes**: `prefix + Ctrl-s` → jot down ideas → `prefix + Ctrl-s` (close)
+- **Temporary commands**: Check git status, run tests, or debug without disrupting your main work
+- **Multi-project development**: Different scratch sessions for each project window automatically
 
 ## Configuration
 
@@ -118,8 +119,9 @@ managed by the plugin internally.
 
 Scratch sessions are automatically destroyed when all panes matching the session name format are
 closed. For example:
+
 - With format `#S-#I@scratch`: scratch session is destroyed when the corresponding window is closed
-- With format `#S@scratch`: scratch session is destroyed when the entire tmux session is closed  
+- With format `#S@scratch`: scratch session is destroyed when the entire tmux session is closed
 - With format `#S-#I-#P@scratch`: scratch session is destroyed when the specific pane is closed
 
 ## License
