@@ -70,6 +70,21 @@ set -g @toggle-scratch-keys 'C-a'
 set -g @toggle-scratch-keys 'C-s C-a M-s'
 ```
 
+### Root Table Key Bindings (No Prefix)
+
+For even faster access, you can bind keys directly to the root table (no prefix required):
+
+```bash
+# Single key without prefix (F12)
+set -g @toggle-scratch-root-keys 'F12'
+
+# Multiple keys without prefix (F12, M-s)
+set -g @toggle-scratch-root-keys 'F12 M-s'
+```
+
+**Warning**: Root table bindings can conflict with system shortcuts and other applications.
+Use function keys (F1-F12) or Alt combinations to minimize conflicts.
+
 ### Custom Session Name Format
 
 The session name format determines the scope of your scratch sessions:
