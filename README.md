@@ -127,15 +127,7 @@ set -g @toggle-scratch-popup-options '-w90% -h90% -S fg=yellow,bg=black'
 **Note**: Do not include `-E` (exit immediately) or command arguments in these options, as they are
 managed by the plugin internally.
 
-## How It Works
-
-1. **Session Management**: Creates a unique session name based on current session and window
-2. **Popup Toggle**: Uses tmux's `display-popup` to show/hide the scratch terminal
-3. **Automatic Cleanup**: Monitors pane exits and removes unused scratch sessions when all matching
-   panes are closed
-4. **Persistence**: The scratch session continues running even when popup is closed
-
-### Automatic Session Cleanup
+## Automatic Session Cleanup
 
 Scratch sessions are automatically destroyed when all panes matching the session name format are
 closed. For example:
@@ -143,6 +135,32 @@ closed. For example:
 - With format `#S-#I@scratch`: scratch session is destroyed when the corresponding window is closed
 - With format `#S@scratch`: scratch session is destroyed when the entire tmux session is closed
 - With format `#S-#I-#P@scratch`: scratch session is destroyed when the specific pane is closed
+
+### Limitations
+
+Scratch sessions can get lost or mixed up if you perform operations that change any of the
+tmux format variables used in your session name format:
+
+- **Session name changes** (affects `#S`) - moving windows between sessions, renaming
+  sessions
+- **Window index changes** (affects `#I`) - swapping windows, renumbering windows, moving
+  windows within a session
+- **Pane index changes** (affects `#P`) - closing other panes, swapping panes,
+  splitting/joining panes
+
+The cleanup mechanism relies on exact format matching, so changes to the underlying tmux
+state can cause your scratch work to disappear or get assigned to the wrong location.
+
+If you frequently use advanced tmux operations, consider using ID-based formats like
+`"#{session_id}-#{window_id}@scratch"` which are stable across operations.
+
+## How It Works
+
+1. **Session Management**: Creates a unique session name based on current session and window
+2. **Popup Toggle**: Uses tmux's `display-popup` to show/hide the scratch terminal
+3. **Automatic Cleanup**: Monitors pane exits and removes unused scratch sessions when all matching
+   panes are closed
+4. **Persistence**: The scratch session continues running even when popup is closed
 
 ## License
 
