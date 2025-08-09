@@ -12,7 +12,7 @@ escape_tmux_formats() {
   echo $text
 }
 
-FORMAT=$(get_session_name_format)
+FORMAT=$(option_session_name_format)
 PATTERN=$(echo "$FORMAT" | sed -e 's/[][)(\\.*^$+?|]/\\&/g' | escape_tmux_formats)
 diff --old-line-format='' --unchanged-line-format='' --new-line-format='%L' \
   <(tmux list-panes -aF "$FORMAT" | uniq) \
