@@ -8,17 +8,20 @@ tmux -V | grep -q ' 3\.[2-9]\| [4-9]\.' || {
 
 CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+get_tmux_option() {
+  local key="$1" default="$2"
+  tmux display-message -pF "#{?${key},#{${key}},${default}}"
+}
+
 BIND_COMMAND="if-shell -F '#{E:@__toggle-scratch-session-name}' \\
   'detach-client' \\
   'run-shell \"$CURRENT_DIR/scripts/toggle-scratch.bash\""
 
-KEYS=$(tmux display-message -pF "#{?@toggle-scratch-keys,#{@toggle-scratch-keys},C-s}")
-for key in $KEYS; do
+for key in $(get_tmux_option @toggle-scratch-keys "C-s"); do
   tmux bind-key -N 'Toggle scratch popup' $key "$BIND_COMMAND"
 done
 
-ROOT_KEYS=$(tmux display-message -pF "#{?@toggle-scratch-root-keys,#{@toggle-scratch-root-keys},}")
-for key in $ROOT_KEYS; do
+for key in $(get_tmux_option @toggle-scratch-root-keys); do
   tmux bind-key -T root -N 'Toggle scratch popup' $key "$BIND_COMMAND"
 done
 
