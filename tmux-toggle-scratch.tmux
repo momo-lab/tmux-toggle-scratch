@@ -15,7 +15,7 @@ get_tmux_option() {
 
 BIND_COMMAND="if-shell -F '#{E:@__toggle-scratch-session-name}' \\
   'detach-client' \\
-  'run-shell \"$CURRENT_DIR/scripts/toggle-scratch.bash\""
+  'run-shell \"$CURRENT_DIR/scripts/toggle-scratch.bash\"'"
 
 for key in $(get_tmux_option @toggle-scratch-keys "C-s"); do
   tmux bind-key -N 'Toggle scratch popup' $key "$BIND_COMMAND"
