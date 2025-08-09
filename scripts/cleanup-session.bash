@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 
-CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-source "$CURRENT_DIR/helper.bash"
+current_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source "$current_dir/helper.bash"
 
 escape_tmux_formats() {
   local text=$(cat)
@@ -12,9 +12,9 @@ escape_tmux_formats() {
   echo $text
 }
 
-FORMAT=$(option_session_name_format)
-PATTERN=$(echo "$FORMAT" | sed -e 's/[][)(\\.*^$+?|]/\\&/g' | escape_tmux_formats)
+format=$(option_session_name_format)
+pattern=$(echo "$format" | sed -e 's/[][)(\\.*^$+?|]/\\&/g' | escape_tmux_formats)
 diff --old-line-format='' --unchanged-line-format='' --new-line-format='%L' \
-  <(tmux list-panes -aF "$FORMAT" | uniq) \
-  <(tmux list-sessions -F '#S' -f "#{m/r:${PATTERN},#S}") |
+  <(tmux list-panes -aF "$format" | uniq) \
+  <(tmux list-sessions -F '#S' -f "#{m/r:${pattern},#S}") |
   xargs -I {} tmux kill-session -t {}

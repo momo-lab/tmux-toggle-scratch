@@ -6,19 +6,19 @@ tmux -V | grep -q ' 3\.[2-9]\| [4-9]\.' || {
   exit 1
 }
 
-CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-source "$CURRENT_DIR/scripts/helper.bash"
+current_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source "$current_dir/scripts/helper.bash"
 
-BIND_COMMAND="if-shell -F '#{E:@__toggle-scratch-session-name}' \\
+bind_command="if-shell -F '#{E:@__toggle-scratch-session-name}' \\
   'detach-client' \\
-  'run-shell \"$CURRENT_DIR/scripts/show-scratch-popup.bash\"'"
+  'run-shell \"$current_dir/scripts/show-scratch-popup.bash\"'"
 
 for key in $(option_keys); do
-  tmux bind-key -N 'Toggle scratch popup' $key "$BIND_COMMAND"
+  tmux bind-key -N 'Toggle scratch popup' $key "$bind_command"
 done
 
 for key in $(option_root_keys); do
-  tmux bind-key -T root -N 'Toggle scratch popup' $key "$BIND_COMMAND"
+  tmux bind-key -T root -N 'Toggle scratch popup' $key "$bind_command"
 done
 
-tmux set-hook -g 'pane-exited' "run-shell $CURRENT_DIR/scripts/cleanup-session.bash"
+tmux set-hook -g 'pane-exited' "run-shell $current_dir/scripts/cleanup-session.bash"
