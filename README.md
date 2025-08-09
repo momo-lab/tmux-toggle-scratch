@@ -50,6 +50,11 @@ Then press `prefix + I` to install the plugin.
 Default key binding: `prefix + Ctrl-s`
 
 Press the key binding to:
+
+- **Open** a scratch popup session if none is currently visible
+- **Close** the scratch popup if it's already open (returns to your main work)
+- **Resume** your previous scratch session exactly where you left off
+
 The scratch session persists between toggles, so your work is never lost.
 
 ### Common Use Cases
