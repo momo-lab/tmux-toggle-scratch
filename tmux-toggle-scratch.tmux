@@ -22,3 +22,5 @@ for key in $(option_root_keys); do
 done
 
 tmux set-hook -g 'pane-exited' "run-shell $current_dir/scripts/cleanup-session.bash"
+tmux set-hook -g 'after-kill-pane' "run-shell $current_dir/scripts/cleanup-session.bash"
+tmux set-hook -g 'window-unlinked' "run-shell $current_dir/scripts/cleanup-session.bash"
