@@ -6,7 +6,7 @@ A tmux plugin to toggle scratch popup sessions for quick note-taking and tempora
 
 - Toggle scratch popup sessions with simple key bindings
 - Persistent sessions that survive popup close/open cycles
-- Automatic session cleanup when matching panes are closed
+- Automatic session cleanup to remove unused scratch sessions
 - Customizable key bindings and popup options
 - Configurable session scope (per-window, per-session, per-pane, or global)
 
@@ -127,10 +127,36 @@ set -g @toggle-scratch-popup-options '-w90% -h90% -S fg=yellow,bg=black'
 **Note**: Do not include `-E` (exit immediately) or command arguments in these options, as they are
 managed by the plugin internally.
 
+### Hook-based Cleanup
+
+By default, cleanup runs when you open a scratch session. You can also enable immediate cleanup when panes/windows are closed:
+
+```bash
+# Enable tmux hooks for immediate cleanup (default: off)
+set -g @toggle-scratch-use-hooks on
+```
+
+**Note**: This option uses the following tmux hooks: `pane-exited`, `after-kill-pane`, and `window-unlinked`.
+If you or other plugins already use these hooks, enabling this option will **overwrite existing hooks completely** and may cause conflicts.
+
+**Alternative approach**: If you need to integrate with existing hooks, disable this option and manually add the cleanup command to your existing hooks:
+
+```bash
+# Example: integrating with existing pane-exited hook
+set -g @toggle-scratch-use-hooks off
+set-hook -g 'pane-exited' 'your-existing-command ; run-shell ~/.tmux/plugins/tmux-toggle-scratch/scripts/cleanup-session.bash'
+```
+
+Replace `~/.tmux/plugins/tmux-toggle-scratch` with your actual plugin installation path.
+
 ## Automatic Session Cleanup
 
-Scratch sessions are automatically destroyed when all panes matching the session name format are
-closed. For example:
+Scratch sessions are automatically cleaned up in the following ways:
+
+1. **On-demand cleanup**: Runs before opening a scratch session (always enabled)
+2. **Hook-based cleanup**: Runs immediately when panes/windows are closed (optional)
+
+Cleanup removes unused scratch sessions when all panes matching the session name format are closed. For example:
 
 - With format `#S-#I@scratch`: scratch session is destroyed when the corresponding window is closed
 - With format `#S@scratch`: scratch session is destroyed when the entire tmux session is closed
@@ -158,8 +184,7 @@ If you frequently use advanced tmux operations, consider using ID-based formats 
 
 1. **Session Management**: Creates a unique session name based on current session and window
 2. **Popup Toggle**: Uses tmux's `display-popup` to show/hide the scratch terminal
-3. **Automatic Cleanup**: Monitors pane exits and removes unused scratch sessions when all matching
-   panes are closed
+3. **Automatic Cleanup**: Removes unused scratch sessions through on-demand and optional hook-based cleanup
 4. **Persistence**: The scratch session continues running even when popup is closed
 
 ## License
