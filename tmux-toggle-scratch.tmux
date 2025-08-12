@@ -21,6 +21,8 @@ for key in $(option_root_keys); do
   tmux bind-key -T root -N 'Toggle scratch popup' $key "$bind_command"
 done
 
-tmux set-hook -g 'pane-exited' "run-shell $current_dir/scripts/cleanup-session.bash"
-tmux set-hook -g 'after-kill-pane' "run-shell $current_dir/scripts/cleanup-session.bash"
-tmux set-hook -g 'window-unlinked' "run-shell $current_dir/scripts/cleanup-session.bash"
+if [[ "$(option_use_hooks)" == "on" ]]; then
+  tmux set-hook -g 'pane-exited' "run-shell $current_dir/scripts/cleanup-session.bash"
+  tmux set-hook -g 'after-kill-pane' "run-shell $current_dir/scripts/cleanup-session.bash"
+  tmux set-hook -g 'window-unlinked' "run-shell $current_dir/scripts/cleanup-session.bash"
+fi

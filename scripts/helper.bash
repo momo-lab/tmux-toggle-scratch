@@ -19,3 +19,7 @@ option_session_name_format() {
 option_popup_options() {
   get_tmux_option @toggle-scratch-popup-options ""
 }
+
+option_use_hooks() {
+  get_tmux_option @toggle-scratch-use-hooks "off"
+}
