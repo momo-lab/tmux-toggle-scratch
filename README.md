@@ -45,10 +45,6 @@ Then press `prefix + I` to install the plugin.
    tmux source-file ~/.tmux.conf
    ```
 
-## Demo
-
-![tmux-toggle-scratch demo](./assets/capture.gif)
-
 ## Usage
 
 Default key binding: `prefix + Ctrl-s`
