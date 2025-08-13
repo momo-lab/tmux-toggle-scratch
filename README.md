@@ -10,6 +10,10 @@ A tmux plugin to toggle scratch popup sessions for quick note-taking and tempora
 - Customizable key bindings and popup options
 - Configurable session scope (per-window, per-session, per-pane, or global)
 
+## Demo
+
+https://github.com/user-attachments/assets/4c1a5518-5cb2-4bd3-a264-005a09af9880
+
 ## Requirements
 
 - tmux 3.2 or higher (required for `display-popup` command)
