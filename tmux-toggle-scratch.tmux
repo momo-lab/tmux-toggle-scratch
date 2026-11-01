@@ -9,7 +9,7 @@ tmux -V | grep -q ' 3\.[2-9]\| [4-9]\.' || {
 current_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source "$current_dir/scripts/helper.bash"
 
-bind_command="if-shell -F '#{E:@__toggle-scratch-session-name}' \\
+bind_command="if-shell -F '#{!=:#{@__toggle-scratch-session-name},}' \\
   'detach-client' \\
   'run-shell \"$current_dir/scripts/show-scratch-popup.bash\"'"
 
